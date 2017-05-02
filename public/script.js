@@ -41,7 +41,31 @@ function geoTest() {
 }
 
 function createMap(position) {
-  
+   var Lat;
+   var Lng;
+   clearTimeout(waitForUser);
+   if (position.coords) {
+      Lat = position.coords.latitude;
+      Lng = position.coords.longitude;
+   } else {
+      var city = this.innerHTML;
+      if (city === "Beijing") {
+         Lat = "39.912729";
+         Lng = "116.395985";
+      } else if (city === "Paris") {
+         Lat = "48.8564826";
+         Lng = "2.3524135";
+      } else if (city === "Rio de Janeiro") {
+         Lat = "-22.9133954";
+         Lng = "-43.2007101";
+      } 
+      document.getElementById("caption").innerHTML = city;
+   }
+   var mapOptions = {
+     center: new google.maps.LatLng(Lat, Lng),
+      zoom: 10
+   };
+   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
 function fail() {
