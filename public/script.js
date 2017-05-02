@@ -1,6 +1,6 @@
-/*  JavaScript 6th Edition v 2.15
+/*  JavaScript 6th Edition v 2.17
     Chapter 10
-    Hands-on Project 10-3 & 10-5
+    Hands-on Project 10-5
 
     Author: 
     Date:   
@@ -20,11 +20,35 @@
 
 "use strict";
 
-function geoTest(){
+// global variables
+var waitForUser;
+
+function setUpPage() {
+   geoTest();
+   var buttons = document.querySelectorAll("#cities div");  //each city has it's own <div> element
+   for (var i = 0; i < buttons.length; i++ ) {
+      buttons[i].addEventListener("click", createMap, false);
+   }
+}
+
+function geoTest() {
+   waitForUser = setTimeout(fail, 10000);
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(createMap, fail, {timeout: 10000});
+   } else {
+      fail();
+   }
+}
+
+function createMap(position) {
   
 }
 
-//leave this at the bottom of the code
+function fail() {
+   document.getElementById("map").innerHTML = "Unable to access your current location.";
+}
+
+// run setUpPage() function when page finishes loading
 if (window.addEventListener) {
-   window.addEventListener("load", geoTest, false);
+   window.addEventListener("load", setUpPage, false);
 }
